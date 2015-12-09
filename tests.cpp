@@ -154,7 +154,7 @@ namespace rift {
 
     void tests() {
         cout << "Running tests..." << endl;
-        TEST("1", 1);
+    /*    TEST("1", 1);
         TEST("1 + 2", 3);
         TEST("1 - 2", -1);
         TEST("2 * 3", 6);
@@ -220,13 +220,17 @@ namespace rift {
 
         TEST("a = c(1, 2, 3) a[1]", 2);
         TEST("a = \"aba\" a[c(0,2)]", "aa");
-        TEST("a = c(1,2,3) a[c(0,1)] = 56 a", 56, 56, 3);
-
-        // project2();
-        // project3();
-        // project4();
-        // project5();
-        // project6();
+        TEST("a = c(1,2,3) a[c(0,1)] = 56 a", 56, 56, 3);*/
+        cout << "Running test for task 2" << endl;
+        project2();
+        cout << "Running test for task 3" << endl;
+        project3();
+        cout << "Running test for task 4" << endl;
+        project4();
+        cout << "Running test for task 5" << endl;
+        project5();
+        cout << "Running test for task 6" << endl;
+        project6();
     }
 
 } // namespace rift
