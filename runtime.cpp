@@ -526,11 +526,22 @@ RVal * c(int size, ...) {
 }
 
 double doubleDot(DoubleVector * lhs, DoubleVector * rhs) {
-    assert(false and "Fill me in");
+	int maxLength = std::max(lhs->size, rhs->size);
+	double resolution = 0;
+
+	for(int i = 0; i < maxLength; i++)
+	{
+		resolution += lhs->data[i % lhs->size] * rhs->data[i % rhs->size];
+	}
+
+	return resolution;
 }
 
 RVal * genericDot(RVal * lhs, RVal * rhs) {
-    assert(false and "Fill me in");
+	if(lhs->type != RVal::Type::Double || rhs->type != RVal::Type::Double)
+		throw "Operands must be vectors of double";
+	
+	return new RVal(new DoubleVector(doubleDot(lhs->d, rhs->d)));
 }
 
 
