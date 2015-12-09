@@ -318,6 +318,27 @@ bool Unboxing::genericEval() {
     }
 }
 
+bool Unboxing::genericDot() {
+	AType *lhs = state().get(ins->getOperand(0));
+	AType *rhs = state().get(ins->getOperand(1));
+	AType *tmp_result;
+
+	// both must be doubles
+	if( rhs->isDouble() and lhs->isDouble()) {
+		if(lhs->isScalar() and rhs->isScalar()) {
+			tmp_result = updateAnalysis(
+			BinaryOperator::Create(Instruction::FMul, getScalarPayload(lhs), getScalarPayload(rhs), "", ins), new AType(AType::Kind::D));
+		} else {
+			tmp_result = updateAnalysis( RUNTIME_CALL(m->doubleDot, getVectorPayload(lhs), getVectorPayload(rhs)), new AType(AType::Kind::D));
+		}
+
+		ins->replaceAllUsesWith(box(tmp_result));
+		return true;
+	} else {
+		return false;
+	}
+}
+
 bool Unboxing::runOnFunction(llvm::Function & f) {
     //std::cout << "running Unboxing optimization..." << std::endl;
     m = reinterpret_cast<RiftModule*>(f.getParent());
@@ -353,7 +374,9 @@ bool Unboxing::runOnFunction(llvm::Function & f) {
                     erase = genericC();
                 } else if (s == "genericEval") {
                     erase = genericEval();
-                }
+                } else if (s == "genericDot") {
+                    erase = genericDot();
+		}
             }
             if (erase) {
                 llvm::Instruction * v = i;

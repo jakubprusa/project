@@ -68,6 +68,8 @@ protected:
 
     bool genericEval();
 
+    bool genericDot();
+
     /** Rift module currently being optimized, obtained from the function.
 
       The module is used for the declarations of the runtime functions. 
