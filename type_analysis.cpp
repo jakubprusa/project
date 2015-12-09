@@ -129,7 +129,9 @@ bool TypeAnalysis::runOnFunction(llvm::Function & f) {
                         state.update(ci, new AType(AType::Kind::R));
                     } else if (s == "envGet") {
                         state.update(ci, new AType(AType::Kind::R));
-                    }
+                    } else if (s == "genericDot"){
+			state.update(ci, new AType(AType::Kind::R, new AType(AType::Kind::DV, new AType(AType::Kind::D))));    
+		    }
                 } else if (PHINode * phi = dyn_cast<PHINode>(&i)) {
                     AType * first = state.get(phi->getOperand(0));
                     AType * second = state.get(phi->getOperand(1));
